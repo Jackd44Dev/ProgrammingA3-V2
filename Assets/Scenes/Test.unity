@@ -473,6 +473,7 @@ GameObject:
   - component: {fileID: 502692489}
   - component: {fileID: 502692490}
   - component: {fileID: 502692491}
+  - component: {fileID: 502692492}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -524,6 +525,19 @@ MonoBehaviour:
   lava: {fileID: 781840956}
   lavaRiseRate: 0.5
   lavaStartHeight: -10
+--- !u!114 &502692492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502692487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d5c82543fcca76438c0c0989203021f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScore: 0
 --- !u!1 &518304235
 GameObject:
   m_ObjectHideFlags: 0
