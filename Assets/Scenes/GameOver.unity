@@ -1071,13 +1071,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OutcomeText: {fileID: 2054038382}
-  ScoreText: {fileID: 2109437463}
+  CoinsText: {fileID: 0}
   RunTimeText: {fileID: 293096166}
   HeightText: {fileID: 1360170008}
   winText: SUCCESSFUL ESCAPE
   loseText: YOU DIED!
   winColourHex: '#33FF00'
   loseColourHex: '#FF3300'
+  timeManager: {fileID: 11400000, guid: 0f75448fe716473408c70d683070fcb2, type: 2}
+  playerData: {fileID: 0}
 --- !u!1 &1967166926
 GameObject:
   m_ObjectHideFlags: 0
@@ -1454,7 +1456,7 @@ GameObject:
   - component: {fileID: 2109437464}
   - component: {fileID: 2109437463}
   m_Layer: 5
-  m_Name: ScoreText
+  m_Name: CoinsEarnedText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1499,7 +1501,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score: 0'
+  m_text: 'Coins Earned: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -7,21 +7,23 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager GameplayManager;
-    int playerHealth;
-    public int maxHealth = 3;
+    public static GameManager instance;
     public TextMeshProUGUI healthUI;
+    public PlayerData playerData;
+    public TimeManager timeManager;
 
-    bool spikeDamageOnCooldown = false;
+    bool spikeDamageOnCooldown = false; // set to true while player is immune to damage from traps
     
     void Awake()
     {
-        GameplayManager = this;
+        instance = this;
+        
     }
 
     void Start()
     {
-        playerHealth = maxHealth;    
+        playerData.currentHealth = playerData.maxHealth; // set player health correctly based on their max health
+        timeManager.startNewRun(); // time manager begins with a fresh time
     }
 
     void Update()
@@ -29,20 +31,12 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void winGame()
+    public void endGame(bool runVictory) // ends the game, bool is true if player won, false if they died
     {
-        Cursor.lockState = CursorLockMode.None; 
+        Cursor.lockState = CursorLockMode.None; // returns control of mouse to player
         Cursor.visible = true;
-        PlayerPrefs.SetInt("PlayerWon", 1); // this needs to be replaced once i get a handle on scriptable objects for data persistance
-        SceneManager.LoadScene("GameOver");
-
-    }
-
-    public void gameOver()
-    {
-        Cursor.lockState = CursorLockMode.None; 
-        Cursor.visible = true;
-        PlayerPrefs.SetInt("PlayerWon", 0);
+        
+        timeManager.concludeRun();
         SceneManager.LoadScene("GameOver");
     }
 
@@ -50,12 +44,12 @@ public class GameManager : MonoBehaviour
     {
         if (spikeDamageOnCooldown) { return; } // don't double-fire damage events by triggering a cooldown
         StartCoroutine(spikeTrapCooldown());
-        playerHealth -= 1;
-        healthUI.text = "HEALTH: " + playerHealth + "/" + maxHealth;
-        if (playerHealth <= 0) // when out of health, game over
+        playerData.currentHealth -= 1;
+        healthUI.text = "HEALTH: " + playerData.currentHealth + "/" + playerData.maxHealth;
+        if (playerData.currentHealth <= 0) // when out of health, game over
         {
             healthUI.enabled = false;
-            gameOver();
+            endGame(false);
         }
     }
 

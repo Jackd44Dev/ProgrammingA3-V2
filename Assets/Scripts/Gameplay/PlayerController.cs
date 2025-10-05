@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape)) // whenever escape is pressed, pause (or unpause, if paused already) the game
         {
             pauseGame();
         }
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void pauseGame()
+    void pauseGame() // handles pausing/unpausing of the game
     {
         if (gameIsPaused)
         {

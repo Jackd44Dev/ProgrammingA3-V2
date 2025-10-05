@@ -9,23 +9,23 @@ public class PlayerCollisionManager : MonoBehaviour
 
     private void Start()
     {
-        GM = GameManager.GameplayManager;
+        GM = GameManager.instance;
     }
 
     void OnCollisionEnter(Collision collision)
     {
         switch (collision.gameObject.tag) {
             case "Ground":
-                Controller.isGrounded = true;
+                Controller.isGrounded = true; // player is back on the ground, so they may jump again!
                 break;
             case "WinDoor":
-                GM.winGame();
+                GM.endGame(true); // end the game with a win result when reaching a victory door
                 break;
             case "Lava":
-                GM.gameOver();
+                GM.endGame(false); // end the game with a loss result upon contact with lava
                 break;
             case "Trap":
-                GM.damagePlayer();
+                GM.damagePlayer(); // tell gamemanager to decrease the player's health by 1 and trigger a damage cooldown
                 break;
             default:
 

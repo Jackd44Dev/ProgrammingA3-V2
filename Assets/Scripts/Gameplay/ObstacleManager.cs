@@ -9,13 +9,13 @@ public class ObstacleManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        lava.transform.position = new Vector3(0, lavaStartHeight, 0);
+        lava.transform.position = new Vector3(0, lavaStartHeight, 0); // set lava at its proper start height
     }
 
     // Update is called once per frame
     void Update()
     {
-        float lavaHeight = lava.transform.position.y + (lavaRiseRate * Time.deltaTime);
-        lava.transform.position = new Vector3(0, lavaHeight, 0);
+        float lavaHeight = lava.transform.position.y + (lavaRiseRate * Time.deltaTime); // calculate the lava's new height
+        lava.transform.position = new Vector3(0, lavaHeight, 0); // slowly rise the lava's in-world position
     }
 }

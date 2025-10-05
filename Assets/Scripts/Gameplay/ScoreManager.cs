@@ -3,11 +3,11 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour
 {
     public int currentScore;
-    public static ScoreManager Instance;
+    public static ScoreManager instance;
 
     void Awake()
     {
-        Instance = this;    
+        instance = this;    
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
