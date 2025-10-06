@@ -16,6 +16,13 @@ public class PlayerData : ScriptableObject
     public int coinsEarned;
     public int currentHealth;
 
+    public void clearRunInfo() // used when starting a new run, all data that carries across scenes (that pertains to an individual run) are wiped
+    {
+        wonRun = false;
+        coinsEarned = 0;
+        currentHealth = maxHealth;
+    }
+
     public void runConcluded(bool playerWon)
     {
         if (playerWon)

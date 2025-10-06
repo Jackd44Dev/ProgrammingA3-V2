@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ObstacleManager : MonoBehaviour
+public class LavaManager : MonoBehaviour
 {
     public GameObject lava;
     public float lavaRiseRate = 0.5f;
