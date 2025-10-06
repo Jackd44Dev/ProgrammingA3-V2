@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Misc Settings")]
     bool gameIsPaused = false;
+    public PlayerData playerData;
+    public float playerHeight = 1.5f;
 
     void Start()
     {
@@ -34,6 +36,7 @@ public class PlayerController : MonoBehaviour
         }
         lookCamera();
         movePlayer();
+        updateHeight();
     }
 
     void lookCamera()
@@ -75,5 +78,11 @@ public class PlayerController : MonoBehaviour
             Time.timeScale = 0f;
             gameIsPaused = true;
         }
+    }
+
+    void updateHeight() // sends the players Y height above 0 (subtracted by character height) to playerData to determine the player's "true" height
+    {
+        float heightOffset = transform.position.y - playerHeight;
+        playerData.offsetHeight(heightOffset);
     }
 }

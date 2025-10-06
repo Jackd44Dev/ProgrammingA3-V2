@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI healthUI;
     public PlayerData playerData;
     public TimeManager timeManager;
-    public int floorsNeededToWin = 5;
+    public int heightRequiredToWin = 50;
     public int floorScore = 0;
 
     bool spikeDamageOnCooldown = false; // set to true while player is immune to damage from traps
@@ -30,19 +30,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        
-    }
-
     public void endOfFloor(bool playerDied) // ends the game, bool is true if player won, false if they died
     {
         Cursor.lockState = CursorLockMode.None; // returns control of mouse to player
         Cursor.visible = true;
-        
-        timeManager.concludeRun();
         if (playerDied) // if the current floor ended via player death, end the run here
         {
+            timeManager.concludeRun(); // stop tracking the time
             playerData.runConcluded(false); // tells playerData that the run is over and the player did NOT win
             SceneManager.LoadScene("GameOver");
         }
@@ -50,17 +44,27 @@ public class GameManager : MonoBehaviour
         {
             playerData.coinsEarned += floorScore; // only 'bank' score from this floor if they player actually completed it, if they die they earn nothing
             playerData.floorsCompleted++;
-            if (playerData.floorsCompleted >= floorsNeededToWin) // player needs to beat multiple levels consecutively to win
+            if (playerData.baseHeight >= heightRequiredToWin) // player needs to beat multiple levels to raise their height enough to win
             {
+                timeManager.concludeRun(); // stop tracking the time
                 playerData.runConcluded(true); // tell playerData that the run is over, and the player has won
                 SceneManager.LoadScene("GameOver"); // the game over screen will read playerData to see whether to display won or loss text, which is set on the line above in runConcluded
             }
             else // if the player made it to the exit door, but has not yet met the conditions for winning the run, load a new floor for them
             {
+                increaseHeight();
                 SceneManager.LoadScene("Test"); // otherwise, load a new level and keep playing!
             }
         }
-        
+    }
+
+    void increaseHeight()
+    {
+        /* float difficultyRandomOffset = UnityEngine.Random.Range((floorScore / 2), floorScore); // using 2 different maths apparently, so UnityEngine.Random is needed instead of just Random.Range
+        int difficultyBonusHeight = Mathf.RoundToInt(difficultyRandomOffset); // floor difficulty grants a bonus to height gained, floorScore is set from TrapManager.cs  */
+        // the above was scrapped because it was too inconsistent and made the game too hard
+
+        playerData.baseHeight = playerData.height + floorScore; // apply the new height to playerData
     }
 
     public void damagePlayer()

@@ -31,7 +31,7 @@ public class TimeManager : ScriptableObject
 
     public void startNewRun() // wipes old finish times and sets a new start time
     {
-        cleanUp(); // run cleanup BEFORE setting startTime, or startTime will be set correctly only to be reset on the next line
+        cleanUp(); // run cleanup BEFORE setting startTime, or new startTime will also be cleaned up
         startTime = Time.time;
     }
 

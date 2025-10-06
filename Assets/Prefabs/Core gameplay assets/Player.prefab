@@ -285,6 +285,8 @@ MonoBehaviour:
   maxPitch: 85
   mouseSensitivity: 160
   cam: {fileID: 2204441868644824020}
+  playerData: {fileID: 11400000, guid: e832176d68f72d44289fcd41d2b4d3ab, type: 2}
+  playerHeight: 1.5
 --- !u!54 &6882085538910419692
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -325,4 +327,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controller: {fileID: 2726503594537051945}
-  GM: {fileID: 0}
+  GM: {fileID: 561510911699999359, guid: 2d34fc996052bd648a177f504fbaf2eb, type: 3}

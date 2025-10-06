@@ -100,6 +100,7 @@ MonoBehaviour:
   lavaPrefab: {fileID: 5539827580061536651, guid: 7db4c776712f4a246adfc4179ba4c7ef, type: 3}
   lavaRiseRate: 0.5
   lavaStartHeight: -10
+  playerData: {fileID: 11400000, guid: e832176d68f72d44289fcd41d2b4d3ab, type: 2}
 --- !u!1 &1806390531692973086
 GameObject:
   m_ObjectHideFlags: 0
