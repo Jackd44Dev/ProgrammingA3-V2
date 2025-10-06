@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LaserTrap
   m_EditorClassIdentifier: 
   trapPrefab: {fileID: 6790397375283365522, guid: a2d345fd07b45334f84aa201290730f9, type: 3}
-  baseSpawnChance: 90
+  baseSpawnChance: 10
   difficultyIncreasePerTrap: 10

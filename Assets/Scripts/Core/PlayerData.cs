@@ -15,12 +15,18 @@ public class PlayerData : ScriptableObject
     public bool wonRun;
     public int coinsEarned;
     public int currentHealth;
+    public int floorsCompleted;
+    public float height;
+    public float lavaHeight;
 
     public void clearRunInfo() // used when starting a new run, all data that carries across scenes (that pertains to an individual run) are wiped
     {
         wonRun = false;
         coinsEarned = 0;
         currentHealth = maxHealth;
+        floorsCompleted = 0;
+        height = 0f;
+        lavaHeight = 0f;
     }
 
     public void runConcluded(bool playerWon)

@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI healthUI;
     public PlayerData playerData;
     public TimeManager timeManager;
+    public int floorsNeededToWin = 5;
+    public int floorScore = 0;
 
     bool spikeDamageOnCooldown = false; // set to true while player is immune to damage from traps
     
@@ -22,8 +24,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        playerData.currentHealth = playerData.maxHealth; // set player health correctly based on their max health
-        timeManager.startNewRun(); // time manager begins with a fresh time
+        if (playerData.floorsCompleted == 0) // if starting a new run (no floors have been completed yet)
+        {
+            timeManager.startNewRun(); // time manager begins tracking the run with a fresh time
+        }
     }
 
     void Update()
@@ -31,13 +35,32 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void endGame(bool runVictory) // ends the game, bool is true if player won, false if they died
+    public void endOfFloor(bool playerDied) // ends the game, bool is true if player won, false if they died
     {
         Cursor.lockState = CursorLockMode.None; // returns control of mouse to player
         Cursor.visible = true;
         
         timeManager.concludeRun();
-        SceneManager.LoadScene("GameOver");
+        if (playerDied) // if the current floor ended via player death, end the run here
+        {
+            playerData.runConcluded(false); // tells playerData that the run is over and the player did NOT win
+            SceneManager.LoadScene("GameOver");
+        }
+        else // if player got to the exit door, determine if they have won or if they need to keep climbing floors
+        {
+            playerData.coinsEarned += floorScore; // only 'bank' score from this floor if they player actually completed it, if they die they earn nothing
+            playerData.floorsCompleted++;
+            if (playerData.floorsCompleted >= floorsNeededToWin) // player needs to beat multiple levels consecutively to win
+            {
+                playerData.runConcluded(true); // tell playerData that the run is over, and the player has won
+                SceneManager.LoadScene("GameOver"); // the game over screen will read playerData to see whether to display won or loss text, which is set on the line above in runConcluded
+            }
+            else // if the player made it to the exit door, but has not yet met the conditions for winning the run, load a new floor for them
+            {
+                SceneManager.LoadScene("Test"); // otherwise, load a new level and keep playing!
+            }
+        }
+        
     }
 
     public void damagePlayer()
@@ -49,7 +72,7 @@ public class GameManager : MonoBehaviour
         if (playerData.currentHealth <= 0) // when out of health, game over
         {
             healthUI.enabled = false;
-            endGame(false);
+            endOfFloor(false);
         }
     }
 

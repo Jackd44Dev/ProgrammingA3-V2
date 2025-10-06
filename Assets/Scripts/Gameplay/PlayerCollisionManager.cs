@@ -19,13 +19,13 @@ public class PlayerCollisionManager : MonoBehaviour
                 Controller.isGrounded = true; // player is back on the ground, so they may jump again!
                 break;
             case "WinDoor":
-                GM.endGame(true); // end the game with a win result when reaching a victory door
+                GM.endOfFloor(false); // endOfFloor takes a "playerDied" bool parameter, so when reaching a win door, pass a false value!
                 break;
             case "Lava":
-                GM.endGame(false); // end the game with a loss result upon contact with lava
+                GM.endOfFloor(true); // making contact with the lava is instant death, so pass playerDied as true here
                 break;
             case "Trap":
-                GM.damagePlayer(); // tell gamemanager to decrease the player's health by 1 and trigger a damage cooldown
+                GM.damagePlayer(); // tell GameManager to decrease the player's health by 1 and trigger a damage cooldown (GameManager will handle if the player is now out of health)
                 break;
             default:
 

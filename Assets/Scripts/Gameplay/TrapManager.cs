@@ -1,28 +1,34 @@
 using UnityEngine;
 
-public class TrapManager : MonoBehaviour
+public class TrapManager : MonoBehaviour // sorry, this class is CAKED in comments, i had a real hard time getting this one together, but got there in the end :)
 {  
     public GameObject[] trapsToSpawn; // contains empty GameObjects that contain a TrapContainer script, that script holds spawn positions and trap data (prefab, difficulty per trap and spawn chance)
+    GameManager manager;
     
     public int roomDifficultyBase; // how difficult this particular room layout is, without any traps
 
     int roomDifficulty = 0; // used to calculate how hard the current room is
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        manager = GameManager.instance;
         roomDifficulty += roomDifficultyBase;
         foreach (var trap in trapsToSpawn) // for this game prototype, this will only ever be the laser and spike trap. but it's very easy to add to this with new trap types!
         {
-            spawnTraps(trap);
+            int numberOfTrapsSpawned = spawnTraps(trap);
+            int difficultyIncreasePerTrap = trap.GetComponent<TrapContainer>().trapData.difficultyIncreasePerTrap;
+            int roomDifficultyIncrease = numberOfTrapsSpawned * difficultyIncreasePerTrap;
+            roomDifficulty += roomDifficultyIncrease;
         }
+        Debug.Log("Room difficulty is: " +  roomDifficulty);
+        manager.floorScore += roomDifficulty;
     }
 
-    int spawnTraps(GameObject trapObject)
+    int spawnTraps(GameObject trapObject) // uses a TrapContainer to spawn all of one type of trap (i.e. spike trap), then returns how many traps of this type were spawned
     {
         int trapsSpawned = 0;
-        TrapContainer trapContainer = trapObject.GetComponent<TrapContainer>(); // the trap container contains all the trap's info
-        GameObject[] trapSpawns = trapContainer.spawnPositions; // spawn locations are in a MonoBehaviour, as ScriptableObjects can't hold scene GameObjects, only prefabs
+        TrapContainer trapContainer = trapObject.GetComponent<TrapContainer>(); // the trap container contains all the trap's required info
+        GameObject[] trapSpawns = trapContainer.spawnPositions; // spawn locations are in a MonoBehaviour script, as ScriptableObjects can't hold scene GameObjects, only prefabs
         TrapData trapData = trapContainer.trapData; // trapData is global and can be reused across scenes easily
 
         foreach (var trapSpawnPoint in trapSpawns)
@@ -36,15 +42,6 @@ public class TrapManager : MonoBehaviour
                 Instantiate(trapData.trapPrefab, spawnPointTransform.position, spawnPointTransform.rotation);
             }
         }
-
-        Debug.Log("Spawned " + trapsSpawned + " traps!");
         return trapsSpawned;
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
