@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f100de016888b4fb51490fda344a1a, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  runsComplete: 2
-  coins: 68
+  runsComplete: 4
+  coins: 324
   maxHealth: 3
   healthUpgrade1: 0
   wonRun: 0
-  coinsEarned: 10
-  currentHealth: 3
+  coinsEarned: 18
+  currentHealth: 2
   floorsCompleted: 2
-  baseHeight: 30
-  height: 34
-  lavaHeight: 23.364796
+  baseHeight: 16.6
+  height: 16
+  lavaHeight: -1e+9

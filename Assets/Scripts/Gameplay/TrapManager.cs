@@ -20,7 +20,6 @@ public class TrapManager : MonoBehaviour // sorry, this class is CAKED in commen
             int roomDifficultyIncrease = numberOfTrapsSpawned * difficultyIncreasePerTrap;
             roomDifficulty += roomDifficultyIncrease;
         }
-        Debug.Log("Room difficulty is: " +  roomDifficulty);
         manager.floorScore += roomDifficulty;
     }
 
@@ -33,7 +32,7 @@ public class TrapManager : MonoBehaviour // sorry, this class is CAKED in commen
 
         foreach (var trapSpawnPoint in trapSpawns)
         {
-            int RandomRoll = Random.Range(1, 100); // these numbers are inclusive, so 0 to 100 would result in 101 different numbers that can be picked
+            int RandomRoll = Random.Range(0, 100); // these numbers are inclusive/exclusive, so 1 to 100 would result in 99 different numbers that can be picked (100 is excluded)
             float spawnChance = trapData.baseSpawnChance; // obtain the trap's base chance to spawn
             Transform spawnPointTransform = trapSpawnPoint.transform; // find where the trap needs to be placed in the world if the spawn chance is rolled
             if (RandomRoll <= spawnChance) // i.e if spawn chance is 10 (as in, 10%) and we roll a 5, spawn the object

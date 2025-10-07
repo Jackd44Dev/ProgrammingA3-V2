@@ -8,12 +8,12 @@ public class LaserMover : MonoBehaviour
     Vector3 startPos; // automatically set on start based on where the laser has been placed in-world
     Vector3 endPos; // calculated on start based on distanceToMove, using the Z axis
     bool movingTowardsTarget = true; // keeps track of whether the beam needs to be moving "forwards" or "backwards"
+    float lerpProgress = 0f;
     
     void Start()
     {
         startPos = transform.position;
-        endPos = startPos;
-        endPos.z += distanceToMove;
+        endPos = startPos + (transform.forward * distanceToMove);
     }
 
     void Update()
@@ -23,22 +23,29 @@ public class LaserMover : MonoBehaviour
 
     void moveLaser()
     {
-        if (movingTowardsTarget) // move forward on the Z axis
+        if (movingTowardsTarget) // move forwards
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + ((distanceToMove / timeToReachEnd) * Time.deltaTime));
-            if (transform.position.z >= endPos.z) // when reaching (or overshooting) the target point, reverse direction
+            lerpProgress += Time.deltaTime / timeToReachEnd;
+            Vector3 lerpPos = Vector3.Lerp(startPos, endPos, lerpProgress);
+            transform.position = lerpPos;
+            if (lerpProgress >= 1) // when reaching (or overshooting) the target point, reverse direction
             {
+                lerpProgress = 0;
                 movingTowardsTarget = false;
-                transform.position = endPos; // and if laser overshot the target, set it back at its proper end point
+                transform.position = endPos; // if laser somehow overshot the target, set it back at its proper end point
             }
+            
         }
-        else // move backwards on the Z axis
+        else // move backwards
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - ((distanceToMove / timeToReachEnd) * Time.deltaTime));
-            if (transform.position.z <= startPos.z) // same as above, just in reverse (using start instead of end position)
+            lerpProgress += Time.deltaTime / timeToReachEnd;
+            Vector3 lerpPos = Vector3.Lerp(endPos, startPos, lerpProgress);
+            transform.position = lerpPos;
+            if (lerpProgress >= 1) // when reaching (or overshooting) the target point, reverse direction
             {
+                lerpProgress = 0;
                 movingTowardsTarget = true;
-                transform.position = startPos;
+                transform.position = startPos; // if laser somehow overshot the target, set it back at its proper end point
             }
         }
     }

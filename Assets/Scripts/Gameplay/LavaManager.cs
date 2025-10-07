@@ -11,7 +11,6 @@ public class LavaManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start");
         checkToSpawnLava();
     }
 
@@ -35,7 +34,6 @@ public class LavaManager : MonoBehaviour
         if (lavaSpawned) { return; }
         if (playerData.baseHeight <= (10 + playerData.lavaHeight)) // if the lava is 10m or closer to the floor's base height, spawn the lava
         {
-            Debug.Log("Spawning lava, height: " + playerData.baseHeight + ", lava height: " + playerData.lavaHeight + ", height difference: " + (10 + playerData.lavaHeight));
             lavaSpawned = true;
             float physicalLavaOffset = Mathf.Clamp(10 - (playerData.height - playerData.lavaHeight), 0, 10); // if lava height is less than 10 height away from the player, spawn it higher up, closer to the player 
             lavaStartHeight += physicalLavaOffset; // add the offset to the starting height

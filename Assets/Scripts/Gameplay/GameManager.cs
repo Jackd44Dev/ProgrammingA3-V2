@@ -9,10 +9,15 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public TextMeshProUGUI healthUI;
+    public TextMeshProUGUI heightUI;
+    public TextMeshProUGUI lavaHeightUI;
     public PlayerData playerData;
     public TimeManager timeManager;
     public int heightRequiredToWin = 50;
+    public float difficultyHeightIncreaseModifier = 0.1f; // floorScore * this variable (i.e. 0.1 is 10% of floorScore) added as bonus height when completing a floor
     public int floorScore = 0;
+    public string[] gameplayScenes; // a list on scene names that the player can be teleported to after completing a room but not a run (adds possibility for multiple different room layouts)
+    public ParticleSystem hurtVFX;
 
     bool spikeDamageOnCooldown = false; // set to true while player is immune to damage from traps
     
@@ -28,6 +33,13 @@ public class GameManager : MonoBehaviour
         {
             timeManager.startNewRun(); // time manager begins tracking the run with a fresh time
         }
+        updateHealthUI();
+        updateHeightUIs();
+    }
+
+    void Update()
+    {
+        updateHeightUIs();    
     }
 
     public void endOfFloor(bool playerDied) // ends the game, bool is true if player won, false if they died
@@ -53,7 +65,8 @@ public class GameManager : MonoBehaviour
             else // if the player made it to the exit door, but has not yet met the conditions for winning the run, load a new floor for them
             {
                 increaseHeight();
-                SceneManager.LoadScene("Test"); // otherwise, load a new level and keep playing!
+                string randomSceneToLoadNext = gameplayScenes[UnityEngine.Random.Range(0, gameplayScenes.Length)];
+                SceneManager.LoadScene(randomSceneToLoadNext); // otherwise, load a new level and keep playing!
             }
         }
     }
@@ -64,7 +77,7 @@ public class GameManager : MonoBehaviour
         int difficultyBonusHeight = Mathf.RoundToInt(difficultyRandomOffset); // floor difficulty grants a bonus to height gained, floorScore is set from TrapManager.cs  */
         // the above was scrapped because it was too inconsistent and made the game too hard
 
-        playerData.baseHeight = playerData.height + floorScore; // apply the new height to playerData
+        playerData.baseHeight = playerData.height + (floorScore * difficultyHeightIncreaseModifier); // apply the new height to playerData
     }
 
     public void damagePlayer()
@@ -72,11 +85,19 @@ public class GameManager : MonoBehaviour
         if (spikeDamageOnCooldown) { return; } // don't double-fire damage events by triggering a cooldown
         StartCoroutine(spikeTrapCooldown());
         playerData.currentHealth -= 1;
-        healthUI.text = "HEALTH: " + playerData.currentHealth + "/" + playerData.maxHealth;
+        updateHealthUI();
         if (playerData.currentHealth <= 0) // when out of health, game over
         {
             healthUI.enabled = false;
-            endOfFloor(false);
+            endOfFloor(true);
+        }
+        else // only play SFX and VFX if player is still alive
+        {
+            int healthLost = playerData.maxHealth - playerData.currentHealth;
+            for (int i = 1; i <= healthLost; i++) // play the particle effect once for each stack of damage taken, so twice when hit for the second time (more blood particles the lower the player's health)
+            {
+                hurtVFX.Play();
+            }
         }
     }
 
@@ -87,4 +108,14 @@ public class GameManager : MonoBehaviour
         spikeDamageOnCooldown = false;
     }
 
+    void updateHealthUI()
+    {
+        healthUI.text = "HEALTH: " + playerData.currentHealth + "/" + playerData.maxHealth;
+    }
+
+    void updateHeightUIs()
+    {
+        heightUI.text = "HEIGHT: " + playerData.height.ToString("0") + "m";
+        lavaHeightUI.text = "LAVA: " + playerData.lavaHeight.ToString("0") + "m";
+    }
 }
