@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
         {
             playerData.coinsEarned += floorScore; // only 'bank' score from this floor if they player actually completed it, if they die they earn nothing
             playerData.floorsCompleted++;
-            if (playerData.baseHeight >= heightRequiredToWin) // player needs to beat multiple levels to raise their height enough to win
+            if (playerData.baseHeight >= heightRequiredToWin && !playerData.endlessMode) // player needs to beat multiple levels to raise their height enough to win, also won't work in endless mode
             {
                 timeManager.concludeRun(); // stop tracking the time
                 playerData.runConcluded(true); // tell playerData that the run is over, and the player has won
@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
 
     void updateHeightUIs()
     {
-        if (playerData.baseHeight > heightRequiredToWin)
+        if (playerData.baseHeight > heightRequiredToWin && !playerData.endlessMode) // when on the final floor (and not in endless), let the player know they've almost won
         {
             heightUI.text = "HEIGHT: " + playerData.height.ToString("0") + "m - Clear floor to win!";
         }

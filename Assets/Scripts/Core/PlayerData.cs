@@ -11,8 +11,8 @@ public class PlayerData : ScriptableObject
 
     [Header("Cosmetics")] // the player's owned cosmetics
     public Material[] lavaMaterials;
-    public int lastCosmeticUnlocked = 0;
     public int[] coinsRequiredForCosmetics;
+    public int lastCosmeticUnlocked = 0;
     public int selectedCosmetic = 0;
 
     [Header("Run Info")] // player related per-run info, wiped at the start of a new run - realistically this should be a new scriptable object, but alas, time constraints.
