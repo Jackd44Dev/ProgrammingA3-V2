@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ef205d9fc2b444785aa5a1f9571a6e, type: 3}
   m_Name: SpikeTrap
   m_EditorClassIdentifier: 
-  trapPrefab: {fileID: 1843802812679695319, guid: afbb80e28719de14e86cb7ec536b2c89, type: 3}
+  trapPrefab: {fileID: 8112297660166362285, guid: 1729e24dd2f8e1c4280a21824b418367, type: 3}
   baseSpawnChance: 50
   difficultyIncreasePerTrap: 2

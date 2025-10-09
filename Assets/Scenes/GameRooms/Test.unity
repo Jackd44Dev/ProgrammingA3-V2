@@ -296,6 +296,10 @@ PrefabInstance:
       propertyPath: 'spawnPositions.Array.data[0]'
       value: 
       objectReference: {fileID: 1131095074}
+    - target: {fileID: 6704631621750245802, guid: d3293d50d2826614d87131c0fb4b1c50, type: 3}
+      propertyPath: lavaStartHeight
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
