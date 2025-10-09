@@ -45,12 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthUI: {fileID: 0}
+  heightUI: {fileID: 0}
+  lavaHeightUI: {fileID: 0}
   playerData: {fileID: 11400000, guid: e832176d68f72d44289fcd41d2b4d3ab, type: 2}
   timeManager: {fileID: 11400000, guid: 0f75448fe716473408c70d683070fcb2, type: 2}
   heightRequiredToWin: 50
-  difficultyHeightIncreaseModifier: 0.1
+  difficultyHeightIncreaseModifier: 0.25
   floorScore: 0
-  gameplayScenes:
-  - Layout1
-  - Test
+  numRoomLayouts: 2
   hurtVFX: {fileID: 4677198845072593723, guid: 09cde1ea59f44444da52cb0e3db980eb, type: 3}

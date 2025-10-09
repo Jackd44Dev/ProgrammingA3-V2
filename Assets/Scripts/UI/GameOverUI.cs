@@ -28,5 +28,6 @@ public class GameOverUI : MonoBehaviour
         CoinsText.text = "Coins Earned: " + coinsEarned.ToString();
         float runTime = timeManager.fetchRunLength();
         RunTimeText.text = "Time Survived: " + runTime.ToString() + "s";
+        HeightText.text = "Final Height: " + playerData.height + "m";
     }
 }

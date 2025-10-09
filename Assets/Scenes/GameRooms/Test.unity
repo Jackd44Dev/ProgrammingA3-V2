@@ -1493,6 +1493,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 561510911699999359, guid: 2d34fc996052bd648a177f504fbaf2eb, type: 3}
+      propertyPath: hurtVFX
+      value: 
+      objectReference: {fileID: 7042089187697250510}
+    - target: {fileID: 561510911699999359, guid: 2d34fc996052bd648a177f504fbaf2eb, type: 3}
       propertyPath: healthUI
       value: 
       objectReference: {fileID: 1399914735}
@@ -1671,6 +1675,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09cde1ea59f44444da52cb0e3db980eb, type: 3}
+--- !u!198 &7042089187697250510 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4677198845072593723, guid: 09cde1ea59f44444da52cb0e3db980eb, type: 3}
+  m_PrefabInstance: {fileID: 7042089187697250509}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9065869331119842689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1773,9 +1782,9 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 666821835}
-  - {fileID: 7042089187697250509}
   - {fileID: 4092926118160885150}
-  - {fileID: 274016997}
+  - {fileID: 7042089187697250509}
   - {fileID: 9065869331119842689}
+  - {fileID: 274016997}
   - {fileID: 1128858533}
   - {fileID: 1531884249}

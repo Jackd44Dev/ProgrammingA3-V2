@@ -7,6 +7,7 @@ public class LavaManager : MonoBehaviour
     public float lavaRiseRate = 0.5f;
     public float lavaStartHeight = 0f; // this might look silly, but this value will be placed somewhere between 0 and -10 a little further down in this script
     public PlayerData playerData;
+    public float lavaVirtualRiseRateModifier = 1.5f;
     bool lavaSpawned = false; // tracks whether the lava has been spawned in this scene yet
 
     void Start()
@@ -34,11 +35,10 @@ public class LavaManager : MonoBehaviour
         {
             lavaSpawned = true;
             float lavaHeightOffset = Mathf.Clamp(playerData.baseHeight - playerData.lavaHeight, 0, 10); // clamps the distance between the base height and the lava, higher value means the lava spawns lower! 
-            Debug.Log("Player height is: " + playerData.baseHeight + "m, Lava height is: " + playerData.lavaHeight + "m, Height difference is: " + (playerData.baseHeight - playerData.lavaHeight) + "m");
-            Debug.Log("Offsetting lava to be -" + lavaHeightOffset + "m!");
             lavaStartHeight -= lavaHeightOffset; // the lava will spawn at y = 0 by default, so this line will instead make the lava spawn further down from the player, based on lavaHeightOffset
             Vector3 lavaSpawnPosition = new Vector3(0, lavaStartHeight, 0); // set lava at its adjusted start height
             lava = Instantiate(lavaPrefab, lavaSpawnPosition, Quaternion.identity);
+            lava.GetComponent<MeshRenderer>().material = playerData.lavaMaterials[playerData.selectedCosmetic]; // edit the lava's material to the chosen cosmetic
         }
     }
 
@@ -52,6 +52,6 @@ public class LavaManager : MonoBehaviour
 
     void simulateLavaHeight() // increases lavaHeight if the lava is not physically present in the world
     {
-        playerData.lavaHeight += (lavaRiseRate * Time.deltaTime * 1.5f);
+        playerData.lavaHeight += (lavaRiseRate * Time.deltaTime * lavaVirtualRiseRateModifier);
     }
 }

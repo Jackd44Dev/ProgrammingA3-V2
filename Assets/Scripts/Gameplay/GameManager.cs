@@ -16,10 +16,11 @@ public class GameManager : MonoBehaviour
     public int heightRequiredToWin = 50;
     public float difficultyHeightIncreaseModifier = 0.1f; // floorScore * this variable (i.e. 0.1 is 10% of floorScore) added as bonus height when completing a floor
     public int floorScore = 0;
-    public string[] gameplayScenes; // a list on scene names that the player can be teleported to after completing a room but not a run (adds possibility for multiple different room layouts)
+    public int numRoomLayouts = 2; // the room layouts to pick between, this number will be appended to "Layout" i.e. room 2 will be the scene named Layout2
     public ParticleSystem hurtVFX;
 
     bool spikeDamageOnCooldown = false; // set to true while player is immune to damage from traps
+    bool stopUpdatingUI = false; // stop the height UI from jumping up on the last frame before loading a new scene (this bugged me more than it should)
     
     void Awake()
     {
@@ -39,13 +40,14 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        updateHeightUIs();    
+        if (!stopUpdatingUI) { updateHeightUIs(); } // only update height UI if stopUpdatingUI is *NOT* true    
     }
 
     public void endOfFloor(bool playerDied) // ends the game, bool is true if player won, false if they died
     {
         Cursor.lockState = CursorLockMode.None; // returns control of mouse to player
         Cursor.visible = true;
+        stopUpdatingUI = true;
         if (playerDied) // if the current floor ended via player death, end the run here
         {
             timeManager.concludeRun(); // stop tracking the time
@@ -65,7 +67,7 @@ public class GameManager : MonoBehaviour
             else // if the player made it to the exit door, but has not yet met the conditions for winning the run, load a new floor for them
             {
                 increaseHeight();
-                string randomSceneToLoadNext = gameplayScenes[UnityEngine.Random.Range(0, gameplayScenes.Length)];
+                string randomSceneToLoadNext = "Layout" + UnityEngine.Random.Range(1, numRoomLayouts + 1); // have to have roomLayouts + 1, as max is exclusive in random.range
                 SceneManager.LoadScene(randomSceneToLoadNext); // otherwise, load a new level and keep playing!
             }
         }
@@ -94,9 +96,11 @@ public class GameManager : MonoBehaviour
         else // only play SFX and VFX if player is still alive
         {
             int healthLost = playerData.maxHealth - playerData.currentHealth;
+            Debug.Log("Total health lost: " + healthLost);
             for (int i = 1; i <= healthLost; i++) // play the particle effect once for each stack of damage taken, so twice when hit for the second time (more blood particles the lower the player's health)
             {
                 hurtVFX.Play();
+                Debug.Log("Firing VFX");
             }
         }
     }
@@ -115,7 +119,14 @@ public class GameManager : MonoBehaviour
 
     void updateHeightUIs()
     {
-        heightUI.text = "HEIGHT: " + playerData.height.ToString("0") + "m";
+        if (playerData.baseHeight > heightRequiredToWin)
+        {
+            heightUI.text = "HEIGHT: " + playerData.height.ToString("0") + "m - Clear floor to win!";
+        }
+        else
+        {
+            heightUI.text = "HEIGHT: " + playerData.height.ToString("0") + "m";
+        }
         lavaHeightUI.text = "LAVA: " + playerData.lavaHeight.ToString("0") + "m";
     }
 }

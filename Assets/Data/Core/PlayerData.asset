@@ -13,9 +13,19 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   runsComplete: 4
+  maxHeightReached: 0
   coins: 324
   maxHealth: 3
-  healthUpgrade1: 0
+  lavaMaterials:
+  - {fileID: 2100000, guid: 19fabdee8dfa03d46b4c513cf8524925, type: 2}
+  - {fileID: 2100000, guid: 15c5e2f9ff5727546bf58ab1bff12935, type: 2}
+  - {fileID: 2100000, guid: 98f1173ae36367f41ac1edc872ad4d79, type: 2}
+  - {fileID: 2100000, guid: de558bb0aff424149ac6029a8546a1a5, type: 2}
+  - {fileID: 2100000, guid: d7f2100bfb3270c43928eec702aba898, type: 2}
+  - {fileID: 2100000, guid: 717d595bf771eec41b73a6257d20ca90, type: 2}
+  lastCosmeticUnlocked: 0
+  coinsRequiredForCosmetics: 0000000064000000f4010000e8030000c409000010270000
+  selectedCosmetic: 5
   wonRun: 0
   coinsEarned: 18
   currentHealth: 2
@@ -23,3 +33,4 @@ MonoBehaviour:
   baseHeight: 16.6
   height: 16
   lavaHeight: -1e+9
+  endlessMode: 0

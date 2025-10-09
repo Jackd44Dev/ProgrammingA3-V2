@@ -2758,6 +2758,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09cde1ea59f44444da52cb0e3db980eb, type: 3}
+--- !u!198 &1931103745 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4677198845072593723, guid: 09cde1ea59f44444da52cb0e3db980eb, type: 3}
+  m_PrefabInstance: {fileID: 1931103744}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1960648259
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2766,6 +2771,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 561510911699999359, guid: 2d34fc996052bd648a177f504fbaf2eb, type: 3}
+      propertyPath: hurtVFX
+      value: 
+      objectReference: {fileID: 1931103745}
     - target: {fileID: 561510911699999359, guid: 2d34fc996052bd648a177f504fbaf2eb, type: 3}
       propertyPath: healthUI
       value: 
