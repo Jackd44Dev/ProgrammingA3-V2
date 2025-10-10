@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerData", menuName = "Scriptable Objects/PlayerData")]
@@ -24,6 +25,7 @@ public class PlayerData : ScriptableObject
     public int height; // this is the player's "true" height, adding their current Y position to baseHeight
     public float lavaHeight;
     public bool endlessMode;
+    public bool lavaFrozen;
 
     public void clearRunInfo() // used when starting a new run, all data that carries across scenes (that pertains to an individual run) are wiped
     {
@@ -35,6 +37,8 @@ public class PlayerData : ScriptableObject
         height = 0;
         lavaHeight = -10f;
         endlessMode = false;
+        lavaFrozen = false;
+        MusicManager.instance.startNewGame(); // tells the music manager to start playing gameplay music
     }
 
     public void runConcluded(bool playerWon) // handles some high score tracking and cosmetic unlock functionality
@@ -55,6 +59,7 @@ public class PlayerData : ScriptableObject
         }
         coins += coinsEarned;
         checkForUnlockedCosmetics();
+        MusicManager.instance.backToMenu(); // tells the music manager to stop the gameplay playlist and play the menu song
     }
 
     void checkForUnlockedCosmetics()

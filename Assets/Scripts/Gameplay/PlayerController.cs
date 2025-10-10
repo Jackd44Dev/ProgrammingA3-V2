@@ -17,9 +17,10 @@ public class PlayerController : MonoBehaviour
     Rigidbody rigidBody;
 
     [Header("Misc Settings")]
-    bool gameIsPaused = false;
+    public bool gameIsPaused = false;
     public PlayerData playerData;
     public float playerHeight = 1.5f;
+    public GameObject pauseMenu;
 
     void Start()
     {
@@ -66,17 +67,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void pauseGame() // handles pausing/unpausing of the game
+    public void pauseGame() // handles pausing/unpausing of the game
     {
         if (gameIsPaused)
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             Time.timeScale = 1f;
             gameIsPaused = false;
+            pauseMenu.SetActive(false);
         }
         else
         {
+            Cursor.lockState = CursorLockMode.None; // allow player to move mouse around while paused, so they can interact with the UI
+            Cursor.visible = true;
             Time.timeScale = 0f;
             gameIsPaused = true;
+            pauseMenu.SetActive(true);
         }
     }
 

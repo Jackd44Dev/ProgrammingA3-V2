@@ -17,6 +17,7 @@ public class LavaManager : MonoBehaviour
 
     void Update()
     {
+        if (playerData.lavaFrozen) { return; } // don't rise lava if lava freeze powerup is currently active
         if (lavaSpawned)
         {
             raiseLava();

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f100de016888b4fb51490fda344a1a, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  runsComplete: 6
-  maxHeightReached: 76
-  coins: 499
+  runsComplete: 0
+  maxHeightReached: 0
+  coins: 0
   maxHealth: 3
   lavaMaterials:
   - {fileID: 2100000, guid: 19fabdee8dfa03d46b4c513cf8524925, type: 2}
@@ -24,13 +24,14 @@ MonoBehaviour:
   - {fileID: 2100000, guid: d7f2100bfb3270c43928eec702aba898, type: 2}
   - {fileID: 2100000, guid: 717d595bf771eec41b73a6257d20ca90, type: 2}
   coinsRequiredForCosmetics: 0000000064000000f4010000e8030000c409000010270000
-  lastCosmeticUnlocked: 1
+  lastCosmeticUnlocked: 0
   selectedCosmetic: 0
-  wonRun: 1
-  coinsEarned: 76
+  wonRun: 0
+  coinsEarned: 0
   currentHealth: 3
-  floorsCompleted: 4
-  baseHeight: 55
-  height: 76
-  lavaHeight: 48.49474
+  floorsCompleted: 0
+  baseHeight: 0
+  height: 1
+  lavaHeight: -6.973464
   endlessMode: 0
+  lavaFrozen: 0

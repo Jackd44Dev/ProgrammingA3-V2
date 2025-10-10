@@ -18,14 +18,18 @@ public class GameManager : MonoBehaviour
     public int floorScore = 0;
     public int numRoomLayouts = 2; // the room layouts to pick between, this number will be appended to "Layout" i.e. room 2 will be the scene named Layout2
     public ParticleSystem hurtVFX;
+    public AudioClip hurtSFX;
+    public AudioClip powerupSFX;
+    public Vector3 respawnPoint;
 
+    AudioSource AudioSource;
     bool spikeDamageOnCooldown = false; // set to true while player is immune to damage from traps
-    bool stopUpdatingUI = false; // stop the height UI from jumping up on the last frame before loading a new scene (this bugged me more than it should)
+    bool stopUpdatingUI = false; // stop the height UI from jumping up on the last frame before loading a new scene (this annoyed me more than it should)
     
     void Awake()
     {
         instance = this;
-        
+        AudioSource = GetComponent<AudioSource>(); 
     }
 
     void Start()
@@ -97,12 +101,18 @@ public class GameManager : MonoBehaviour
         {
             int healthLost = playerData.maxHealth - playerData.currentHealth;
             Debug.Log("Total health lost: " + healthLost);
+            AudioSource.PlayOneShot(hurtSFX);
             for (int i = 1; i <= healthLost; i++) // play the particle effect once for each stack of damage taken, so twice when hit for the second time (more blood particles the lower the player's health)
             {
                 hurtVFX.Play();
-                Debug.Log("Firing VFX");
             }
         }
+    }
+
+    public void warpPlayerToStart(PlayerController player)
+    {
+        damagePlayer();
+        player.transform.position = respawnPoint;
     }
 
     IEnumerator spikeTrapCooldown() // triggers a short cooldown after hitting a spike trap so damage instances can't be stacked (I know this as debouncing, I'm not sure if this is an official term)
@@ -127,6 +137,31 @@ public class GameManager : MonoBehaviour
         {
             heightUI.text = "HEIGHT: " + playerData.height.ToString("0") + "m";
         }
-        lavaHeightUI.text = "LAVA: " + playerData.lavaHeight.ToString("0") + "m";
+        if (playerData.lavaFrozen)
+        {
+            lavaHeightUI.text = "LAVA: " + playerData.lavaHeight.ToString("0") + "m (FROZEN)";
+        }
+        else 
+        { 
+            lavaHeightUI.text = "LAVA: " + playerData.lavaHeight.ToString("0") + "m";
+        }
+    }
+
+    public void playPowerupSFX()
+    {
+        AudioSource.PlayOneShot(powerupSFX);
+    }
+
+    public void freezeLava()
+    { 
+        StartCoroutine(runLavaFreeze());
+    }
+
+    public IEnumerator runLavaFreeze()
+    {
+        playerData.lavaFrozen = true;
+        yield return new WaitForSeconds(5f);
+        Debug.Log("Unfreezing lava");
+        playerData.lavaFrozen = false;
     }
 }

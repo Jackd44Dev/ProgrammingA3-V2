@@ -27,6 +27,9 @@ public class PlayerCollisionManager : MonoBehaviour
             case "Trap":
                 GM.damagePlayer(); // tell GameManager to decrease the player's health by 1 and trigger a damage cooldown (GameManager will handle if the player is now out of health)
                 break;
+            case "SafetyNet":
+                GM.warpPlayerToStart(Controller);
+                break;
             default:
 
                 break;
