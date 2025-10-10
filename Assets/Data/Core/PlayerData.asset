@@ -25,7 +25,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 717d595bf771eec41b73a6257d20ca90, type: 2}
   coinsRequiredForCosmetics: 0000000064000000f4010000e8030000c409000010270000
   lastCosmeticUnlocked: 1
-  selectedCosmetic: 4
+  selectedCosmetic: 0
   wonRun: 1
   coinsEarned: 76
   currentHealth: 3

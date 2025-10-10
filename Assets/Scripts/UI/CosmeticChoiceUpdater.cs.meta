@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 31b9e7302096c904781ea2e451b1b50d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - cosmeticControlScript: {instanceID: 0}
+  - playerData: {fileID: 11400000, guid: e832176d68f72d44289fcd41d2b4d3ab, type: 2}
+  - buttonText: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
